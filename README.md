@@ -28,7 +28,7 @@ git pull   # symlinks stay in place, changes apply immediately
 
 | Skill | Triggers automatically when... |
 |-------|-------------------------------|
-| powershell | Writing, reviewing, or scaffolding any PowerShell script, module, or Pester test |
+| powershell | Writing, reviewing, or scaffolding any PowerShell script or module |
 | ansible | Writing, reviewing, or scaffolding any Ansible playbook, role, or Molecule test |
 | bash | Writing, reviewing, or scaffolding any Bash/shell script |
 | terraform | Writing, reviewing, or scaffolding any Terraform configuration or module |
