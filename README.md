@@ -20,8 +20,17 @@ Symlinks skills into `~/.claude/skills/`. Re-run after adding new skills.
 
 ## Updating
 
+After installing, an `update-skills` shell function is added to your `~/.bashrc` / `~/.zshrc` (or `$PROFILE` on Windows). Run it from anywhere:
+
 ```bash
-git pull   # symlinks stay in place, changes apply immediately
+update-skills
+```
+
+Or call the script directly without the alias:
+
+```bash
+~/claude-skills/update.sh       # Linux/macOS
+& "$HOME\claude-skills\update.ps1"  # Windows
 ```
 
 ## Skills
