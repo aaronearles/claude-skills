@@ -29,3 +29,13 @@ foreach ($SkillDir in Get-ChildItem -Path $SkillsSrc -Directory) {
 }
 
 Write-Host "Done. Restart Claude to apply changes."
+
+# Remove Update-Skills function from PowerShell profile
+if (Test-Path $PROFILE) {
+    $Content = Get-Content $PROFILE -Raw -ErrorAction SilentlyContinue
+    if ($Content -match '# BEGIN claude-skills') {
+        $Updated = $Content -replace '(?s)\r?\n# BEGIN claude-skills.*?# END claude-skills\r?\n?', ''
+        Set-Content -Path $PROFILE -Value $Updated -NoNewline
+        Write-Host "Removed update-skills from $PROFILE"
+    }
+}

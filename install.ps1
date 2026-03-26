@@ -50,3 +50,38 @@ foreach ($SkillDir in Get-ChildItem -Path $SkillsSrc -Directory) {
 }
 
 Write-Host "Done. Restart Claude to pick up changes."
+
+# Inject Update-Skills function into PowerShell profile
+$FunctionBlock = @'
+
+# BEGIN claude-skills
+function Update-Skills {
+    $SkillLink = Get-ChildItem -Path "$HOME\.claude\skills" -Directory | Select-Object -First 1
+    if (-not $SkillLink) {
+        Write-Error 'update-skills: no skills found in ~/.claude/skills/'
+        return
+    }
+    $Target = (Get-Item $SkillLink.FullName).Target
+    $Repo = git -C $Target rev-parse --show-toplevel 2>$null
+    if (-not $Repo) {
+        Write-Error "update-skills: could not locate git repo from $Target"
+        return
+    }
+    git -C $Repo pull
+}
+Set-Alias -Name update-skills -Value Update-Skills -Scope Global
+# END claude-skills
+'@
+
+if (-not (Test-Path $PROFILE)) {
+    New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+}
+
+$ProfileContent = Get-Content $PROFILE -Raw -ErrorAction SilentlyContinue
+if ($ProfileContent -notmatch '# BEGIN claude-skills') {
+    Add-Content -Path $PROFILE -Value $FunctionBlock
+    Write-Host "Added update-skills to $PROFILE"
+    Write-Host "Restart your shell or run '. `$PROFILE' to use update-skills."
+} else {
+    Write-Host "update-skills already present in $PROFILE — skipping"
+}

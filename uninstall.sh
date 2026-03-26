@@ -19,3 +19,11 @@ for skill_dir in "$SKILLS_SRC"/*/; do
 done
 
 echo "Done. Restart Claude to apply changes."
+
+# Remove update-skills shell function from .bashrc / .zshrc
+for rc_file in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [[ -f "$rc_file" ]] && grep -q '# BEGIN claude-skills' "$rc_file"; then
+        sed '/# BEGIN claude-skills/,/# END claude-skills/d' "$rc_file" > "$rc_file.tmp" && mv "$rc_file.tmp" "$rc_file"
+        echo "Removed update-skills from $rc_file"
+    fi
+done
