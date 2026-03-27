@@ -37,6 +37,7 @@ Or call the script directly without the alias:
 
 | Skill | Triggers automatically when... |
 |-------|-------------------------------|
+| docker | Writing, reviewing, or scaffolding any Docker Compose file, Dockerfile, or Traefik configuration |
 | powershell | Writing, reviewing, or scaffolding any PowerShell script or module |
 | ansible | Writing, reviewing, or scaffolding any Ansible playbook, role, or Molecule test |
 | bash | Writing, reviewing, or scaffolding any Bash/shell script |
